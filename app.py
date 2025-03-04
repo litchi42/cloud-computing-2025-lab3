@@ -5,7 +5,6 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-# Utilisez le chemin absolu pour accéder au fichier monté dans Azure
 data_file = "/mnt/data.json"
 
 def read_messages_from_file():
@@ -25,8 +24,6 @@ def append_message_to_file(content):
     with open(data_file, mode='w') as messages_file:
         json.dump(data, messages_file)
 
-
-# The Flask route, defining the main behaviour of the webserver:
 @app.route("/")
 def home():
     new_message = request.args.get('msg')
