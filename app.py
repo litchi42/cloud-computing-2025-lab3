@@ -5,23 +5,24 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
+# Utilisez le chemin absolu pour accéder au fichier monté dans Azure
 data_file = "/mnt/data.json"
 
 def read_messages_from_file():
     """ Read all messages from a JSON file"""
-    with open('data.json') as messages_file:
+    with open(data_file) as messages_file:
         return json.load(messages_file)
 
 
 def append_message_to_file(content):
-    """ Read the contents of JSON file, add this message to it's contents, then write it back to disk. """
+    """ Read the contents of JSON file, add this message to its contents, then write it back to disk. """
     data = read_messages_from_file()
     new_message = {
         'content': content,
         'timestamp': datetime.now().isoformat(" ", "seconds")
     }
     data['messages'].append(new_message)
-    with open('data.json', mode='w') as messages_file:
+    with open(data_file, mode='w') as messages_file:
         json.dump(data, messages_file)
 
 
